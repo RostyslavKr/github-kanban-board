@@ -8,29 +8,35 @@ export const Column = () => {
   const dispatch = useDispatch();
   const columns = useSelector(getIssues);
   console.log(columns);
-  const moveItem = useCallback((dragIndex, hoverIndex) => {
-    const columnsSlice = prevCards =>
-      update(prevCards, {
-        $splice: [
-          [dragIndex, 1],
-          [hoverIndex, 0, prevCards[dragIndex]],
-        ],
-      });
-    const column = columnsSlice(columns[0].issues);
-    console.log('column', column);
-    dispatch(setIssues(column));
-  }, []);
-  const renderItem = useCallback((list, index) => {
-    return (
-      <ItemIssues
-        key={list.number}
-        index={index}
-        id={list.number}
-        data={list}
-        moveItem={moveItem}
-      />
-    );
-  }, []);
+  const moveItem = useCallback(
+    (dragIndex, hoverIndex) => {
+      const columnsSlice = prevCards =>
+        update(prevCards, {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, prevCards[dragIndex]],
+          ],
+        });
+      const column = columnsSlice(columns[0].issues);
+      console.log('column', column);
+      dispatch(setIssues(column));
+    },
+    [columns, dispatch]
+  );
+  const renderItem = useCallback(
+    (list, index) => {
+      return (
+        <ItemIssues
+          key={list.number}
+          index={index}
+          id={list.number}
+          data={list}
+          moveItem={moveItem}
+        />
+      );
+    },
+    [moveItem]
+  );
   return (
     <>
       {columns.map(column => (

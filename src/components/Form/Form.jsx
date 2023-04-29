@@ -11,7 +11,7 @@ export const Form = () => {
 
   useEffect(() => {
     dispatch(fetchIssues(query));
-  }, [query]);
+  }, [query, dispatch]);
   const hanleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget.elements.url.value;

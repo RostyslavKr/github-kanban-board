@@ -2,13 +2,13 @@ import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
 import { ItemTypes } from 'ItemTypes';
 
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-};
+// const style = {
+//   border: '1px dashed gray',
+//   padding: '0.5rem 1rem',
+//   marginBottom: '.5rem',
+//   backgroundColor: 'white',
+//   cursor: 'move',
+// };
 
 export const ItemIssues = ({ data, id, index, moveItem }) => {
   const ref = useRef(null);
@@ -18,7 +18,7 @@ export const ItemIssues = ({ data, id, index, moveItem }) => {
     title,
     user: { login },
   } = data;
-  const [{ handlerId }, drop] = useDrop({
+  const [drop] = useDrop({
     accept: ItemTypes.ITEM,
     drop: () => console.log('Element dropped!'),
     collect(monitor) {
@@ -61,7 +61,7 @@ export const ItemIssues = ({ data, id, index, moveItem }) => {
     },
   });
 
-  const [{ isDragging }, drag] = useDrag({
+  const [drag] = useDrag({
     type: ItemTypes.ITEM,
     item: () => {
       return { id, index };
@@ -70,7 +70,7 @@ export const ItemIssues = ({ data, id, index, moveItem }) => {
       isDragging: monitor.isDragging(),
     }),
   });
-  const opacity = isDragging ? 0 : 1;
+  // const opacity = isDragging ? 0 : 1;
   drag(drop(ref));
   return (
     <div ref={ref}>
